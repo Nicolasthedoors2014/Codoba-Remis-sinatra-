@@ -1,0 +1,49 @@
+<% content_for :header_js do %>
+  <script type="text/javascript" src="/login.js"></script>
+<% end %>
+
+<div class="mdl-grid content-grid">
+<div class="mdl-cell mdl-cell--12-col">
+  <div class="description-section-text">
+    <div class="mdl-typography--display-1-color-contrast">
+      Login
+    </div>
+    <p class="mdl-typography--font-light">
+      Iniciá sesión en <%= app_title %> solo con tu dirección de email.
+      <br>
+    </p>
+  </div>
+</div>
+
+  <div class="mdl-cell mdl-cell--6-col">
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="email" name="email">
+        <label class="mdl-textfield__label" for="email">Correo electrónico</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" id="password" name="password" type="password">
+        <label class="mdl-textfield__label" for="password">Contraseña</label>
+      </div>
+    </div>
+    <div class="mdl-row">
+      <label class="login-radion-buttons mdl-radio mdl-js-radio mdl-js-ripple-effect" for="passenger">
+        <input type="radio" id="passenger" class="mdl-radio__button" name="options" value="passenger" checked>
+        <span class="mdl-radio__label">Pasajero</span>
+      </label>
+      <label class="login-radion-buttons mdl-radio mdl-js-radio mdl-js-ripple-effect" for="driver">
+        <input type="radio" id="driver" class="mdl-radio__button" name="options" value="driver">
+        <span class="mdl-radio__label">Conductor</span>
+      </label>
+    </div>
+    <div class="mdl-row mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--middler">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="submit-button">Aceptar</button>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--middler">
+        <div class="error-div"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mdl-layout-spacer"></div>
+</div>

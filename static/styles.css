@@ -1,0 +1,277 @@
+.content-grid{
+  max-width: 860px;
+  margin-top: 50px !important;
+}
+
+.app-header .mdl-menu__container {
+  z-index: 50;
+  margin: 0 !important;
+}
+
+.app-header {
+  overflow: visible;
+  background-color: white !important;
+}
+
+  .app-header .material-icons {
+    color: white !important;
+  }
+
+  .app-header .mdl-layout__drawer-button {
+    background: transparent;
+    color: white;
+  }
+
+  .app-header .mdl-navigation__link {
+    color: #757575;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .app-navigation-container {
+    /* Simple hack to make the overflow happen to the left instead... */
+    direction: rtl;
+    order: 1;
+    width: 500px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .app-navigation {
+    /* ... and now make sure the content is actually LTR */
+    direction: ltr;
+    justify-content: flex-end;
+    width: 800px;
+  }
+
+  .app-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    line-height: 68px;
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+  }
+
+    .app-navigation .mdl-navigation__link:hover {
+      border-bottom: 4px solid #8bc34a;
+    }
+
+
+.app-drawer {
+  border-right: none;
+}
+
+  .app-drawer-separator {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+  }
+
+  .app-drawer .mdl-navigation__link.mdl-navigation__link {
+    font-size: 14px;
+    color: #757575;
+  }
+
+  .app-drawer span.mdl-navigation__link.mdl-navigation__link {
+    color: #8bc34a;
+  }
+
+  .app-drawer .mdl-layout-title {
+    position: relative;
+    background: #6ab344;
+    height: 160px;
+  }
+
+    .app-drawer .app-logo-image {
+      position: absolute;
+      bottom: 16px;
+    }
+
+.main-content {
+  min-height: 100%;
+}
+
+.title-section {
+    position: relative;
+    height: 600px;
+    width: auto;
+    background-color: #f3f3f3;
+    background: url(images/landing_page_background4.jpg) center no-repeat;
+    background-size: cover;
+}
+
+  .logo-font {
+      font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+      line-height: 1;
+      color: white;
+      font-weight: 350;
+  }
+
+  .main-sub-slogan {
+      font-size: 30px;
+      padding-top: 24px;
+  }
+
+  .main-slogan {
+      font-size: 80px;
+      padding-top: 70px;
+  }
+
+  .mdl-grid.locations-form {
+      /*font-size: 21px;*/
+      margin-top: 220px;
+      max-width: 800px;
+  }
+
+  .locations-form > .mdl-card {
+    min-height: 10px;
+    overflow: visible;
+  }
+
+  .locations-form > .mdl-card > .mdl-card__supporting-text {
+    overflow: visible !important;
+    width: 100%;
+  }
+
+  .btn-large.mdl-button {
+    width: 110px;
+  }
+
+
+.description-section {
+  position: relative;
+  padding-bottom: 80px;
+}
+
+  .description-section-text {
+    max-width: 60%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .description-section-text p {
+    padding-top: 24px;
+  }
+
+.app-link-gray {
+  color: #424242;
+  text-decoration: none;
+}
+
+.app-link {
+  text-decoration: none;
+  color: #8bc34a !important;
+}
+
+  .app-link:hover {
+    color: #7cb342 !important;
+  }
+
+  .app-link .material-icons {
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+  }
+
+div.mdl-layout__drawer-button {
+    display: inline-flex;
+    vertical-align: middle !important;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+.login-radion-buttons.mdl-radio {
+  margin: 20px;
+}
+
+.big-icon.material-icons {
+  font-size: 40px;
+  padding-right: 20px;
+}
+
+.error-div {
+  color: #898989;
+
+}
+
+/**** Available Trips Styles ****/
+
+.info-icon {
+  color: #898989;
+}
+
+/**** Profile Styles ****/
+
+.mdl-grid.rating-div {
+  min-width: 60%;
+}
+
+.star-span > i {
+  color: #FFD700;
+}
+
+.mdl-grid.profile-grid > .mdl-cell{
+  margin-top: 20px;
+}
+
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+
+  .app-navigation-container {
+    display: none;
+  }
+
+  .app-title {
+    display: none !important;
+  }
+
+  .app-mobile-title {
+    display: block !important;
+    position: absolute;
+    left: calc(50% - 70px);
+    top: 12px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .title-section {
+    height: 350px;
+  }
+
+  .main-slogan {
+    font-size: 26px;
+    margin: 0 16px;
+    padding-top: 60px;
+  }
+
+  .main-sub-slogan {
+    font-size: 16px;
+    margin: 0 16px;
+    padding-top: 8px;
+  }
+
+  .mdl-grid.locations-form {
+    margin-top: 60px;
+    font-size: 16px;
+  }
+
+  .description-section-text {
+    margin-top: 20px;
+  }
+
+  .description-section-text > .mdl-typography--display-1-color-contrast {
+    font-size: 20px;
+  }
+
+  .locations-form > .mdl-card > .mdl-card__supporting-text {
+    width: 90%;
+  }
+
+  .description-section{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .description-section-text {
+    max-width: 100%;
+  }
+}

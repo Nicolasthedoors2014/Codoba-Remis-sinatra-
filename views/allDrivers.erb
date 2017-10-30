@@ -1,0 +1,34 @@
+<div class="mdl-grid content-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="description-section-text">
+      <div class="mdl-typography--display-1-color-contrast">
+      Listado de drivers
+      </div>
+    </div>
+  </div>
+  <table class="mdl-data-table mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric">Driver</th>
+        <th>Costo</th>
+        <th>Ver Perfil</th>
+      </tr>
+    </thead>
+    <% trips.each_with_index do |trip, index| %>
+      <tr>
+
+        <td class="mdl-data-table__cell--non-numeric">
+          <b> <%= trip[0] %> </b> <!-- Name of the driver -->
+        </td>
+        <td>
+          <b> <%= trip[1] %> </b> <!-- Fare of the driver -->
+        </td>
+
+        <td>
+          <a href="/profile?user_id=<%= trip[3] %>"><i class="info-icon material-icons">info</i></a>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

@@ -1,0 +1,45 @@
+<% content_for :header_js do %>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css">
+  <script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
+  <script type="text/javascript" src="/list_trips.js"></script>
+<% end %>
+
+<div class="mdl-grid content-grid">
+  <div class="description-section-text">
+    <div class="mdl-typography--display-1-color-contrast">
+      A dónde vas?
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+      <input class="mdl-textfield__input" type="text" id="origin" readonly tabIndex="-1"
+             data-val="<% if !origin.nil? %><%= origin %><% end %>"
+             value="<% if !origin.nil? %><%= origin %><% end %>">
+      <label for="origin" class="mdl-textfield__label">Origen</label>
+      <ul for="origin" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+        <% locations.each do |location| %>
+          <li class="mdl-menu__item" data-val="<%= location %>"><%= location %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+      <input class="mdl-textfield__input" type="text" id="destination" readonly tabIndex="-1"
+             data-val="<% if !destination.nil? %><%= destination %><% end %>"
+             value="<% if !destination.nil? %><%= destination %><% end %>">
+      <label for="destination" class="mdl-textfield__label">Destino</label>
+      <ul for="destination" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+        <% locations.each do |location| %>
+          <li class="mdl-menu__item" data-val="<%= location %>"><%= location %></li>
+        <% end %>
+      </ul>
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+            id="submit-button">
+      Buscar
+    </button>
+  </div>
+  <!-- Div to fill with the available trips -->
+  <div id="available_trip_list">
+  </div>
+</div>
+

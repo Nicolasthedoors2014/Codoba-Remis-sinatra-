@@ -1,0 +1,46 @@
+<div class="mdl-grid content-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="description-section-text">
+      <div class="mdl-typography--display-1-color-contrast">
+      Perfil de usuario
+      </div>
+    </div>
+  </div>
+  <div class="mdl-grid mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--12-col-phone profile-grid">
+        <% if showID %>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">ID</div>
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[0] %></div>
+        <% end %>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Username</div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[1] %></div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Email</div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[2] %></div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Teléfono</div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[3] %></div>
+      <% if view_all %>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Balance</div>
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[4] %></div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Millas acumuladas</div>
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[7] %></div>
+      <% end %>
+      <%if is_driver %>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Patente</div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[5] %></div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Opiniones</div>
+        <div class="mdl-cell mdl-cell--8-col mdl-grid mdl-grid--no-spacing rating-div">
+          <% user[6].each do |rating_count, rating| %>
+          <% rating = 5 - rating_count %>
+            <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--middler">
+              <span class="star-span">
+              <!-- Draw all the stars in the rating line. -->
+              <% (1..5 - rating).each do %>
+                <i class="material-icons">star</i>
+              <% end %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </ul>
+  </div>
+</div>

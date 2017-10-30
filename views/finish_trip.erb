@@ -1,0 +1,43 @@
+<% content_for :header_js do %>
+  <link rel="stylesheet" type="text/css" href="/rating_styles.css">
+<% end %>
+
+
+<div class="mdl-grid content-grid">
+  <div class="description-section-text">
+    <div class="mdl-cell mdl-cell--12-col">
+      <div class="mdl-typography--display-1-color-contrast">
+        Felicitaciones!
+        <p class="mdl-typography--font-light">
+         Tu conductor <%= driver_name %> llegará en cualquier momento. Para finalizar, completa las siguientes acciones:
+        <br>
+        </p>
+      </div>
+    </div>
+      <form method="POST" action="/pay_trip">
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--display-1-color-contrast">
+      <p class="mdl-typography--font-light">
+       Contanos como estuvo tu viaje
+      </p>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col rating-div">
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"></label>
+      </div>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col">
+      <input type="hidden" name="driver_name" value="<%= driver_name %>">
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+              id="select-trip-button" type="submit" name="submit">
+        Pagar viaje
+      </button>
+    </div>
+      </form>
+  </div>
+</div>
+
+

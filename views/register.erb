@@ -1,0 +1,90 @@
+<% content_for :header_js do %>
+  <script type="text/javascript" src="/register.js"></script>
+<% end %>
+
+<div class="mdl-grid content-grid">
+
+    <div class="mdl-cell mdl-cell--12-col description-section-text">
+  <div class="description-section">
+      <div class="mdl-typography--display-1-color-contrast">
+        Registrate ahora y comenzá a usar nuestra app!
+      </div>
+      <p class="mdl-typography--font-light">
+        Te podés registrar como usuario para usar nuestros servicios de transporte, o como conductor para sumarte a nuestro equipo de forma independiente.
+        <br>
+      </p>
+      <a href="" class="app-link mdl-typography--font-light">Averiguá más sobre cómo ser conductor</a>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-typography--text-center">
+    <div class="mdl-typography--font-light mdl-typography--headline">Registrate como usuario</div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="user-name" name="name">
+        <label class="mdl-textfield__label" for="name">Nombre</label>
+      </div>
+    </div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="user-email" name="email">
+        <label class="mdl-textfield__label" for="email">Correo electrónico</label>
+      </div>
+    </div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="user-phone" name="phone">
+        <label class="mdl-textfield__label" for="phone">Teléfono</label>
+      </div>
+    </div>
+    <div class="mdl-row mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--middler">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="register-user-button">Aceptar</button>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--middler">
+        <div class="error-div error-div-passenger"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-typography--text-center">
+    <div class="mdl-typography--font-light mdl-typography--headline">Registrate como conductor</div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="driver-name" name="name">
+        <label class="mdl-textfield__label" for="name">Nombre</label>
+      </div>
+    </div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="driver-email" name="email">
+        <label class="mdl-textfield__label" for="email">Correo electrónico</label>
+      </div>
+    </div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="driver-phone" name="phone">
+        <label class="mdl-textfield__label" for="phone">Teléfono</label>
+      </div>
+    </div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="driver-license" name="license">
+        <label class="mdl-textfield__label" for="license">Patente</label>
+      </div>
+    </div>
+    <div class="mdl-row">
+      <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="driver-fare" name="fare">
+        <label class="mdl-textfield__label" for="license">Tarifa</label>
+      </div>
+    </div>
+    <div class="mdl-row mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--middler">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="register-driver-button">Aceptar</button>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--middler">
+        <div class="error-div error-div-driver"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--3-col"></div>
+</div>

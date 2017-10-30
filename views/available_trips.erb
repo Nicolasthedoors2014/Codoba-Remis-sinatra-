@@ -1,0 +1,52 @@
+<form method="GET" action="/finish_trip">
+  <div class="mdl-cell mdl-cell--12-col">
+    <table class="mdl-data-table mdl-shadow--2dp">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="mdl-data-table__cell--non-numeric">Driver</th>
+          <th>Costo</th>
+          <th>Opiniones</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% trips.each_with_index do |trip, index| %>
+        <tr>
+          <td>
+            <label class="mdl-radio mdl-js-radio" for="trip-<%= index %>">
+              <input type="radio" id="trip-<%= index %>" class="mdl-radio__button"
+                     name="trip_number" value="<%= index %>"/>
+            </label>
+          </td>
+          <td class="mdl-data-table__cell--non-numeric">
+            <b> <%= trip[0] %> </b> <!-- Name of the driver -->
+          </td>
+          <td>
+            <b> <%= trip[1] %> </b> <!-- Fare of the driver -->
+          </td>
+          <td>
+              <% trip[2].each do |rating_count, rating| %> <!-- Raiting of the driver -->
+              <% rating = 5 - rating_count %>
+                <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--middler">
+                  <span class="star-span">
+                  <!-- Draw all the stars in the rating line. -->
+                  <% (1..5 - rating).each do %>
+                    <i class="material-icons">star</i>
+                  <% end %>
+                  </span>
+                </div>
+              <% end %>
+          </td>
+          <td>
+            <a href="/profile?user_id=<%= trip[3] %>"><i class="info-icon material-icons">info</i></a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <div class="mdl-cell mdl-cell--12-col">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+            id="select-trip-button" type="submit" name="submit">Pedir viaje</button>
+  </div>
+</form>

@@ -1,0 +1,61 @@
+<% content_for :header_js do %>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css">
+  <script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
+  <script type="text/javascript" src="/list_trips.js"></script>
+<% end %>
+
+
+<!-- Main title -->
+
+<div class="title-section mdl-typography--text-center">
+  <div class="logo-font main-slogan">
+    Vas a algún lado?
+  </div>
+  <div class="logo-font main-sub-slogan">no te compliques, nosotros te llevamos.</div>
+  <div class="locations-form mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__supporting-text">
+      <form method="GET" action="/list_trips">
+        <div class="locations-form-inputs mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+          <input class="mdl-textfield__input" type="text" id="origin" value="" readonly tabIndex="-1" name="origin">
+          <label for="origin" class="mdl-textfield__label">Origen</label>
+          <ul for="origin" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+            <% locations.each do |location| %>
+              <li class="mdl-menu__item" data-val="<%= location %>"><%= location %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="locations-form-inputs mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth is-dirty">
+          <input class="mdl-textfield__input" type="text" id="destination" value="" readonly tabIndex="-1" name="destination">
+          <label for="destination" class="mdl-textfield__label">Destino</label>
+          <ul for="destination" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+            <% locations.each do |location| %>
+              <li class="mdl-menu__item" data-val="<%= location %>"><%= location %></li>
+            <% end %>
+          </ul>
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                type="submit" name="submit">
+          Buscar
+        </button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Description -->
+<div class="mdl-grid content-grid">
+<div class="description-section">
+  <a name="screens"></a>
+  <div class="description-section-text">
+    <div class="mdl-typography--display-1-color-contrast">
+      Con <%= app_title %> viajá fácil, cómodo y seguro.
+    </div>
+    <p class="mdl-typography--font-light">
+      Donde sea que estés, nuestros conductores te buscan en tiempo record, podés seguir el recorrido del viaje en tu app y podés pagar directamente desde tu celular. Olvidate de la plata!
+      <br>
+    </p>
+    <a href="" class="app-link mdl-typography--font-light">Descargá la app</a>
+  </div>
+</div>
+</div>
