@@ -68,13 +68,7 @@ class AppController
 
   # Computes the distance between origin and destination
   def calculate_distance(origin, destination)
-    ox = @locations[origin].xcordinate
-    oy = @locations[origin].ycordinate
-    dx = @locations[destination].xcordinate
-    dy = @locations[destination].ycordinate
-    distance = (dx - ox) + (dy - oy)
-
-    distance.abs.round
+    @locations[origin].distance_to(@locations[destination])
   end
 
   # Returns the names of all locations.
