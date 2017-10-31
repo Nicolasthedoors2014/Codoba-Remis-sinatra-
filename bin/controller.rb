@@ -123,11 +123,11 @@ class AppController
         user.balance
       elsif info == 'phone'
         user.phone
-      elsif info == 'miles' and user.type == 'passenger'
+      elsif info == 'miles'
         user.miles
-      elsif info == 'licence' and user.type == 'driver'
+      elsif info == 'licence'
         user.licence
-      elsif info == 'raiting' and user.type == 'driver'
+      elsif info == 'raiting'
         user.raiting
       end
     rescue
@@ -162,7 +162,7 @@ class AppController
       data_hash = []
     end
     # Use the values in data_hash to fill the @locations list.
-    for location in data_hash
+    data_hash.each do |location|
       @locations[location['name']] = Location.new(location['name'],
                               location['x_coordinate'],location['y_coordinate'])
     end
@@ -181,7 +181,7 @@ class AppController
     end
     # Use the values in data_hash to fill the @passenger or
     # @drivers list, and users_by_id list.
-    for user in data_hash
+    data_hash.each do |user|
       if user['type'] == "passenger"
         @passengers[user['email']] = Passenger.new(user['name'], user['email'],
                                   user['phone'], user['balance'], user['miles'])
