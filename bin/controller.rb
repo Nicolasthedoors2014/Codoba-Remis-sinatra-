@@ -169,7 +169,8 @@ class AppController
     end
     # Use the values in data_hash to fill the @locations list.
     for location in data_hash
-      @locations[location['name']] = Location.new(location['name'],location['x_coordinate'],location['y_coordinate'])
+      @locations[location['name']] = Location.new(location['name'],
+                              location['x_coordinate'],location['y_coordinate'])
     end
   end
 
@@ -184,13 +185,17 @@ class AppController
       data_hash = []
       save_users
     end
-    # Use the values in data_hash to fill the @passenger or @drivers list, and users_by_id list.
+    # Use the values in data_hash to fill the @passenger or
+    # @drivers list, and users_by_id list.
     for user in data_hash
       if user['type'] == "passenger"
-        @passengers[user['email']] = Passenger.new(user['name'], user['email'], user['phone'], user['balance'], user['miles'])
+        @passengers[user['email']] = Passenger.new(user['name'], user['email'],
+                                  user['phone'], user['balance'], user['miles'])
         @users_by_id[@passengers[user['email']].id.to_s] = @passengers[user['email']]
       elsif user['type'] == "driver"
-        @drivers[user['email']] = Driver.new(user['name'], user['email'], user['phone'], user['balance'], user['licence'], user['fare'], user['raiting'])
+        @drivers[user['email']] = Driver.new(user['name'], user['email'],
+                                user['phone'], user['balance'], user['licence'],
+                                user['fare'], user['raiting'])
         @users_by_id[@drivers[user['email']].id.to_s] = @drivers[user['email']]
       end
     end

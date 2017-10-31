@@ -160,7 +160,8 @@ post '/available_trips' do
   random_trips =  AppController.instance.random_trips(origin, destination)
   session['origin'] = origin
   session['destination'] = destination
-  session['miles'] = AppController.instance.calculate_distance(origin, destination)
+  session['miles'] = AppController.instance.calculate_distance(origin,
+                                                              destination)
   erb :available_trips, :layout => false, :locals => {
     :trips => random_trips,
   }
@@ -181,7 +182,8 @@ get '/finish_trip' do
       redirect '/list_trips'
     end
     tripNumbrer = Integer(params[:trip_number])
-    random_trips =  AppController.instance.random_trips(session['origin'], session['destination'])
+    random_trips =  AppController.instance.random_trips(session['origin'],
+                                                        session['destination'])
     session['driver_selected'] = random_trips[tripNumbrer][3]
     session['fare'] = random_trips[tripNumbrer][1]
     erb :finish_trip, :layout => :layout, :locals => {
@@ -195,13 +197,17 @@ end
 # Saves the payment and the possible rating of the user. The param keys are:
 #   :rating (int) The scoring of the driver for this trip.
 post '/pay_trip' do
-  AppController.instance.update_user_info(session['user_id'].inspect, 'balance',0 - session['fare'])
-  AppController.instance.update_user_info(session['driver_selected'].inspect, 'balance',session['fare'])
-  AppController.instance.update_user_info(session['user_id'].inspect, 'miles', session['miles'])
+  AppController.instance.update_user_info(session['user_id'].inspect,
+                                          'balance',0 - session['fare'])
+  AppController.instance.update_user_info(session['driver_selected'].inspect,
+                                          'balance',session['fare'])
+  AppController.instance.update_user_info(session['user_id'].inspect, 'miles',
+                                          session['miles'])
   # Update raiting only if the user gave an opinion
   if params[:rating] != nil
     raiting = Integer(params[:rating])
-    AppController.instance.update_user_info(session['driver_selected'].inspect, 'raiting',raiting)
+    AppController.instance.update_user_info(session['driver_selected'].inspect,
+                                            'raiting',raiting)
   end
   session['fare']  = nil
   session['driver_selected']  = nil
