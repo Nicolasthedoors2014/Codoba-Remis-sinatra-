@@ -113,7 +113,7 @@ class AppController
   def look_for_driver_id(email)
     user = @drivers.dig(email)
     if user != nil
-      user.get_user_id
+      user.id
     else
       nill
     end
@@ -124,20 +124,21 @@ class AppController
   def look_for_user_info(id,info)
     user = @users_by_id.dig(id)
     if user != nil and info == 'name'
-      user.get_user_name
+      user.name
     elsif user != nil and info == 'email'
-      user.get_user_email
+      user.email
     elsif user != nil and info == 'balance'
-      user.get_user_balance
+      user.balance
     elsif user != nil and info == 'phone'
-      user.get_user_phone
-    elsif user != nil and info == 'miles' and user.get_user_type == 'passenger'
-      user.get_passenger_miles
-    elsif user != nil and info == 'licence' and user.get_user_type == 'driver'
-      user.get_driver_licence
-    elsif user != nil and info == 'raiting' and user.get_user_type == 'driver'
-      user.get_driver_raiting
-    else nil
+      user.phone
+    elsif user != nil and info == 'miles' and user.type == 'passenger'
+      user.miles
+    elsif user != nil and info == 'licence' and user.type == 'driver'
+      user.licence
+    elsif user != nil and info == 'raiting' and user.type == 'driver'
+      user.raiting
+    else
+      nil
     end
   end
 
@@ -146,11 +147,11 @@ class AppController
   def update_user_info(id,info,value)
 
     if info == 'balance'
-      @users_by_id[id].update_balance(value)
-    elsif info == 'raiting' and @users_by_id[id].get_user_type == "driver"
+      @users_by_id[id].balance = @users_by_id[id].balance + value
+    elsif info == 'raiting' and @users_by_id[id].type == "driver"
       @users_by_id[id].update_raiting(value)
-    elsif info == 'miles' and @users_by_id[id].get_user_type == "passenger"
-      @users_by_id[id].update_miles(value)
+    elsif info == 'miles' and @users_by_id[id].type == "passenger"
+      @users_by_id[id].miles = @users_by_id[id].miles + value
     end
     save_users()
   end
@@ -188,10 +189,10 @@ class AppController
     for user in data_hash
       if user['type'] == "passenger"
         @passengers[user['email']] = Passenger.new(user['name'], user['email'], user['phone'], user['balance'], user['miles'])
-        @users_by_id[@passengers[user['email']].get_user_id.to_s] = @passengers[user['email']]
+        @users_by_id[@passengers[user['email']].id.to_s] = @passengers[user['email']]
       elsif user['type'] == "driver"
         @drivers[user['email']] = Driver.new(user['name'], user['email'], user['phone'], user['balance'], user['licence'], user['fare'], user['raiting'])
-        @users_by_id[@drivers[user['email']].get_user_id.to_s] = @drivers[user['email']]
+        @users_by_id[@drivers[user['email']].id.to_s] = @drivers[user['email']]
       end
     end
     # Set user_id_count to the number of users so that the next user that registers has the corresponding id.
