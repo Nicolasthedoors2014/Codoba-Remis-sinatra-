@@ -61,6 +61,10 @@ post '/register_passenger' do
   else
     redirect '/400'
   end
+  session['user_id'] = AppController.instance.look_for_passenger_id(email)
+  if session['user_id'] == nil
+    redirect '/400'
+  end
 end
 
 # Registers a driver. If the user email already exists, it returns code 400.
@@ -85,6 +89,10 @@ post '/register_driver' do
     AppController.instance.register_driver(name, email, phone, licence, fare)
     '/'  # Redirection url
   else
+    redirect '/400'
+  end
+  session['user_id'] = AppController.instance.look_for_driver_id(email)
+  if session['user_id'] == nil
     redirect '/400'
   end
 end
