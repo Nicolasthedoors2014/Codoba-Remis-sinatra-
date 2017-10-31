@@ -22,8 +22,7 @@ class AppController
     # To load/save to json, this hashes can't have symbols.
     # Attribute indexed by user_id
     @users_by_id = {}
-    # Registered user counter, to assing id sequential.
-    @user_id_count = 0
+
     # Attributes indexed by email
     @passengers = {}
     @drivers = {}
@@ -42,7 +41,6 @@ class AppController
     @users_by_id[@passengers[email].id.to_s] = @passengers[email]
 
     save_users
-    @user_id_count = @user_id_count + 1
     # return the passenger id
     @passengers[email].id.to_s
   end
@@ -53,7 +51,6 @@ class AppController
     @drivers[email] = Driver.new(name, email, phone, 0, licence, fare, [])
     @users_by_id[@drivers[email].id.to_s] = @drivers[email]
     save_users
-    @user_id_count = @user_id_count + 1
     # return the driver id
     @drivers[email].id.to_s
   end
@@ -91,7 +88,7 @@ class AppController
   def save_users
     data_hash = []
     keys = @users_by_id.keys
-    for user in keys
+    keys.each do |user|
       data_hash.push(@users_by_id[user].to_hash)
     end
     file = File.open(USER_DATABASE_FILENAME, 'w')
@@ -115,29 +112,31 @@ class AppController
     if user != nil
       user.id
     else
-      nill
+      nil
     end
   end
 
   # Takes a id of an user and the information that is wanted from this,
   # and Return associated information
   def look_for_user_info(id,info)
-    user = @users_by_id.dig(id)
-    if user != nil and info == 'name'
-      user.name
-    elsif user != nil and info == 'email'
-      user.email
-    elsif user != nil and info == 'balance'
-      user.balance
-    elsif user != nil and info == 'phone'
-      user.phone
-    elsif user != nil and info == 'miles' and user.type == 'passenger'
-      user.miles
-    elsif user != nil and info == 'licence' and user.type == 'driver'
-      user.licence
-    elsif user != nil and info == 'raiting' and user.type == 'driver'
-      user.raiting
-    else
+    begin
+      user = @users_by_id.dig(id)
+      if info == 'name'
+        user.name
+      elsif  info == 'email'
+        user.email
+      elsif info == 'balance'
+        user.balance
+      elsif info == 'phone'
+        user.phone
+      elsif info == 'miles' and user.type == 'passenger'
+        user.miles
+      elsif info == 'licence' and user.type == 'driver'
+        user.licence
+      elsif info == 'raiting' and user.type == 'driver'
+        user.raiting
+      end
+    rescue
       nil
     end
   end
@@ -195,8 +194,6 @@ class AppController
         @users_by_id[@drivers[user['email']].id.to_s] = @drivers[user['email']]
       end
     end
-    # Set user_id_count to the number of users so that the next user that registers has the corresponding id.
-    @user_id_count = @users_by_id.length
   end
 
 
