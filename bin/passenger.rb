@@ -3,20 +3,12 @@ require './bin/user'
 # Class to represent passenger.
 
 class Passenger < User
+  attr_accessor :miles
+
     def initialize(name, email, phone, balance, miles)
-        @miles = miles
         super(name, email, phone, balance)
+        @miles = miles
         @type = 'passenger'
-    end
-
-    # Methods.
-
-    def update_miles(value)
-      @miles = @miles + value
-    end
-
-    def get_passenger_miles()
-        return @miles
     end
 
     def to_hash

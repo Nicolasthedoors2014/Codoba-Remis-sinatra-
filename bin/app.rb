@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/content_for'
 require './bin/controller'
 
-APP_NAME = "Cordobia remis"
+APP_NAME = "Cordoba remis"
 
 # Sinatra configurations
 enable :sessions

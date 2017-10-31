@@ -3,6 +3,7 @@ require './bin/user'
 # Class to represent driver.
 
 class Driver < User
+  attr_reader :fare, :raiting, :licence
     def initialize(name, email, phone, balance, licence, fare, raiting)
         @licence = licence
         @fare = fare
@@ -17,17 +18,6 @@ class Driver < User
       @raiting.push(value)
     end
 
-    def get_driver_licence()
-        return @licence
-    end
-
-    def get_driver_fere()
-        return @fare
-    end
-
-    def get_driver_raiting()
-        return @raiting
-    end
 
     def to_hash
         return { 'name' => @name, 'email' => @email, 'phone' => @phone, 'balance' => @balance,

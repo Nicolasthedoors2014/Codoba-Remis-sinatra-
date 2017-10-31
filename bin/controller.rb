@@ -39,23 +39,23 @@ class AppController
   def register_passenger(name, email, phone)
     # to keep track of the new user registered
     @passengers[email] = Passenger.new(name, email, phone, 0, 0)
-    @users_by_id[@passengers[email].get_user_id.to_s] = @passengers[email]
+    @users_by_id[@passengers[email].id.to_s] = @passengers[email]
 
     save_users
     @user_id_count = @user_id_count + 1
     # return the passenger id
-    return @passengers[email].get_user_id.to_s
+    @passengers[email].id.to_s
   end
 
   # Registers a new driver. Returns the id of the new user.
   def register_driver(name, email, phone, licence, fare)
     #  keep track of the new user registered
     @drivers[email] = Driver.new(name, email, phone, 0, licence, fare, [])
-    @users_by_id[@drivers[email].get_user_id.to_s] = @drivers[email]
+    @users_by_id[@drivers[email].id.to_s] = @drivers[email]
     save_users
     @user_id_count = @user_id_count + 1
     # return the driver id
-    return @drivers[email].get_user_id.to_s
+    @drivers[email].id.to_s
   end
 
   # Creates a fake list of trips
@@ -64,9 +64,9 @@ class AppController
     distance = calculate_distance(origin, destination)
     # List of trips from the origin to the destination with all the drivers.
     @drivers.each_value { |driver| trips.push(
-      [driver.get_user_name, driver.get_driver_fere * distance, driver.get_driver_raiting, driver.get_user_id]
+      [driver.name, driver.fare * distance, driver.raiting, driver.id]
     )}
-    return trips
+    trips
   end
 
   # Computes the distance between origin and destination
@@ -77,12 +77,12 @@ class AppController
     dy = @locations[destination].ycordinate
     distance = (dx - ox) + (dy - oy)
 
-    return distance.abs.round
+    distance.abs.round
   end
 
   # Returns the names of all locations.
   def location_names
-    return @locations.keys
+    @locations.keys
   end
 
   # Saves the users in the hashes @drivers and @passengers
@@ -103,18 +103,20 @@ class AppController
   def look_for_passenger_id(email)
     user = @passengers.dig(email)
     if user != nil
-      return user.get_user_id
+      user.id
+    else
+      nil
     end
-    return nil
   end
 
   # Takes a email and return the id of the driver associated whit that email
   def look_for_driver_id(email)
     user = @drivers.dig(email)
     if user != nil
-      return user.get_user_id
+      user.get_user_id
+    else
+      nill
     end
-    return nil
   end
 
   # Takes a id of an user and the information that is wanted from this,
@@ -122,21 +124,21 @@ class AppController
   def look_for_user_info(id,info)
     user = @users_by_id.dig(id)
     if user != nil and info == 'name'
-      return user.get_user_name
+      user.get_user_name
     elsif user != nil and info == 'email'
-      return user.get_user_email
+      user.get_user_email
     elsif user != nil and info == 'balance'
-      return user.get_user_balance
+      user.get_user_balance
     elsif user != nil and info == 'phone'
-      return user.get_user_phone
+      user.get_user_phone
     elsif user != nil and info == 'miles' and user.get_user_type == 'passenger'
-      return user.get_passenger_miles
+      user.get_passenger_miles
     elsif user != nil and info == 'licence' and user.get_user_type == 'driver'
-      return user.get_driver_licence
+      user.get_driver_licence
     elsif user != nil and info == 'raiting' and user.get_user_type == 'driver'
-      return user.get_driver_raiting
+      user.get_driver_raiting
+    else nil
     end
-    return nil
   end
 
   # Update information (info) for the new value,

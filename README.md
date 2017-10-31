@@ -1,6 +1,6 @@
 Paradigmas de la Programación 2017 - Lab 2
 
-# Codobia remi
+# Cordoba remis
 
   Aplicación web para conectar pasajeros con conductores particulares.
 
