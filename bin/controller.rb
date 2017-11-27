@@ -48,7 +48,7 @@ class AppController
   # Registers a new driver. Returns the id of the new user.
   def register_driver(name, email, phone, licence, fare)
     #  keep track of the new user registered
-    @drivers[email] = Driver.new(name, email, phone, 0, licence, fare, [])
+    @drivers[email] = Driver.new(name, email, phone, 0, licence, fare, nil)
     @users_by_id[@drivers[email].id.to_s] = @drivers[email]
     save_users
     # return the driver id
@@ -61,7 +61,7 @@ class AppController
     distance = calculate_distance(origin, destination)
     # List of trips from the origin to the destination with all the drivers.
     @drivers.each_value { |driver| trips.push(
-      [driver.name, driver.fare * distance, driver.raiting, driver.id]
+      [driver.name, driver.fare * distance, driver.rating, driver.id]
     )}
     trips
   end
@@ -127,8 +127,8 @@ class AppController
         user.miles
       elsif info == 'licence'
         user.licence
-      elsif info == 'raiting'
-        user.raiting
+      elsif info == 'rating'
+        user.rating
       end
     rescue
       nil
@@ -141,8 +141,8 @@ class AppController
 
     if info == 'balance'
       @users_by_id[id].balance = @users_by_id[id].balance + value
-    elsif info == 'raiting' and @users_by_id[id].type == "driver"
-      @users_by_id[id].update_raiting(value)
+    elsif info == 'rating' and @users_by_id[id].type == "driver"
+      @users_by_id[id].update_rating(value)
     elsif info == 'miles' and @users_by_id[id].type == "passenger"
       @users_by_id[id].miles = @users_by_id[id].miles + value
     end
@@ -189,7 +189,7 @@ class AppController
       elsif user['type'] == "driver"
         @drivers[user['email']] = Driver.new(user['name'], user['email'],
                                 user['phone'], user['balance'], user['licence'],
-                                user['fare'], user['raiting'])
+                                user['fare'], user['rating'])
         @users_by_id[@drivers[user['email']].id.to_s] = @drivers[user['email']]
       end
     end

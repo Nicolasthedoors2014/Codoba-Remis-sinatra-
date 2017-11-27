@@ -29,13 +29,14 @@
         <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Opiniones</div>
         <div class="mdl-cell mdl-cell--8-col mdl-grid mdl-grid--no-spacing rating-div">
           <% user[6].each do |rating_count, rating| %>
-          <% rating = 5 - rating_count %>
             <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--middler">
               <span class="star-span">
               <!-- Draw all the stars in the rating line. -->
-              <% (1..5 - rating).each do %>
+              <% (1..rating).each do %>
                 <i class="material-icons">star</i>
               <% end %>
+              <%= rating_count %>
+
               </span>
             </div>
           <% end %>

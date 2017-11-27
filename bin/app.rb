@@ -203,11 +203,11 @@ post '/pay_trip' do
                                           'balance',session['fare'])
   AppController.instance.update_user_info(session['user_id'].inspect, 'miles',
                                           session['miles'])
-  # Update raiting only if the user gave an opinion
+  # Update rating only if the user gave an opinion
   if params[:rating] != nil
-    raiting = Integer(params[:rating])
+    rating = Integer(params[:rating])
     AppController.instance.update_user_info(session['driver_selected'].inspect,
-                                            'raiting',raiting)
+                                            'rating',rating)
   end
   session['fare']  = nil
   session['driver_selected']  = nil
@@ -236,7 +236,7 @@ get '/profile' do
           AppController.instance.look_for_user_info(id_user,"phone"),
           AppController.instance.look_for_user_info(id_user,"balance"),
           AppController.instance.look_for_user_info(id_user,"licence"),
-          AppController.instance.look_for_user_info(id_user,"raiting"),
+          AppController.instance.look_for_user_info(id_user,"rating"),
           AppController.instance.look_for_user_info(id_user,"miles")]
   is_driver = false
   if user[5] != nil
