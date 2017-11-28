@@ -76,6 +76,12 @@ class AppController
     @locations.keys
   end
 
+  # Return the user with id specified
+  def get_user_by_id(id)
+    @users_by_id[id]
+  end
+
+
   # Saves the users in the hashes @drivers and @passengers
   # in a json file.
   # Each user instance must have a to_hash method.
@@ -93,7 +99,7 @@ class AppController
   # Takes a email and return the id of the passenger associated whit that email
   def look_for_passenger_id(email)
     user = @passengers.dig(email)
-    if user != nil
+    if !user.nil?
       user.id
     else
       nil
@@ -103,7 +109,7 @@ class AppController
   # Takes a email and return the id of the driver associated whit that email
   def look_for_driver_id(email)
     user = @drivers.dig(email)
-    if user != nil
+    if !user.nil?
       user.id
     else
       nil

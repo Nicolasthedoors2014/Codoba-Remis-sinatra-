@@ -9,12 +9,10 @@ class Driver < User
       @licence = licence
       @fare = fare
       @type = 'driver'
-      if !rating.nil?
-        @rating = rating
-      else
-        # [rating_count, rating]
-        @rating = [[0,1],[0,2],[0,3],[0,4],[0,5]]
-      end
+      @rating = rating
+      # if rating is nil (new user), initialize rating as [rating_count, rating]
+      @rating ||= [[0,1],[0,2],[0,3],[0,4],[0,5]]
+
     end
 
     # Methods.
@@ -25,8 +23,9 @@ class Driver < User
 
 
     def to_hash
-        return { 'name' => @name, 'email' => @email, 'phone' => @phone, 'balance' => @balance,
-                'type' => @type, 'licence' => @licence, 'fare' => @fare, 'rating' => @rating}
+        return { 'name' => @name, 'email' => @email, 'phone' => @phone,
+                'balance' => @balance, 'type' => @type, 'licence' => @licence,
+                'fare' => @fare, 'rating' => @rating}
     end
 
 end

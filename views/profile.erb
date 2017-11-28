@@ -7,28 +7,30 @@
     </div>
   </div>
   <div class="mdl-grid mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--12-col-phone profile-grid">
-        <% if showID %>
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">ID</div>
-          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[0] %></div>
-        <% end %>
+      <% if showID %>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">ID</div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user.id %></div>
+      <% end %>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Username</div>
-        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[1] %></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user.name %></div>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Email</div>
-        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[2] %></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user.email %></div>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Teléfono</div>
-        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[3] %></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user.phone %></div>
       <% if view_all %>
           <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Balance</div>
-          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[4] %></div>
-          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Millas acumuladas</div>
-          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[7] %></div>
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user.balance %></div>
       <% end %>
-      <%if is_driver %>
+      <% if user.is_a?(Passenger)%>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Millas acumuladas</div>
+          <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user.miles %></div>
+      <% end %>
+      <%if user.is_a?(Driver) %>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Patente</div>
-        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user[5] %></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone"><%= user.licence %></div>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--1-col-phone">Opiniones</div>
         <div class="mdl-cell mdl-cell--8-col mdl-grid mdl-grid--no-spacing rating-div">
-          <% user[6].each do |rating_count, rating| %>
+          <% user.rating.each do |rating_count, rating| %>
             <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--middler">
               <span class="star-span">
               <!-- Draw all the stars in the rating line. -->

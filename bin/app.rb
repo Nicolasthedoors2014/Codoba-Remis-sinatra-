@@ -54,7 +54,7 @@ post '/register_passenger' do
   email = params[:email]
   existsDriver = AppController.instance.look_for_driver_id(email)
   existsPassenger = AppController.instance.look_for_passenger_id(email)
-  if (existsDriver == nil) and (existsPassenger == nil)
+  if existsDriver.nil? and existsPassenger.nil?
     phone = params[:phone]
     AppController.instance.register_passenger(name, email, phone)
     '/'  # In case everythin is ok, we return the redirection url
@@ -224,35 +224,20 @@ end
 get '/profile' do
   id_user = params[:user_id]
   view_all = false
-  showID = true
-  if id_user == nil
-    view_all = true
+  showID = false
+
+  if id_user.nil?
     id_user = session['user_id'].inspect
+    view_all = true
+    showID = true
   end
-  user = []
-  user = [id_user,
-          AppController.instance.look_for_user_info(id_user,"name"),
-          AppController.instance.look_for_user_info(id_user,"email"),
-          AppController.instance.look_for_user_info(id_user,"phone"),
-          AppController.instance.look_for_user_info(id_user,"balance"),
-          AppController.instance.look_for_user_info(id_user,"licence"),
-          AppController.instance.look_for_user_info(id_user,"rating"),
-          AppController.instance.look_for_user_info(id_user,"miles")]
-  is_driver = false
-  if user[5] != nil
-    is_driver = true
-  end
-  if !is_driver
-    user[6] = []
-  end
-  if id_user != session['user_id'].inspect
-    showID = false
-  end
+
+  user = AppController.instance.get_user_by_id(id_user)
+
   erb :profile, :layout => :layout, :locals => {
     :app_title => APP_NAME,
     :username => get_username,
     :view_all => view_all,
-    :is_driver => is_driver,
     :user => user,
     :showID => showID
   }
