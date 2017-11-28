@@ -204,7 +204,7 @@ post '/pay_trip' do
   AppController.instance.update_user_info(session['user_id'].inspect, 'miles',
                                           session['miles'])
   # Update rating only if the user gave an opinion
-  if params[:rating] != nil
+  if !params[:rating].nil?
     rating = Integer(params[:rating])
     AppController.instance.update_user_info(session['driver_selected'].inspect,
                                             'rating',rating)
@@ -244,11 +244,9 @@ get '/profile' do
 end
 
 get '/allDrivers' do
-
-  random_trips =  AppController.instance.random_trips("Alta Córdoba", "Patio Olmos")
   erb :allDrivers, :layout => :layout, :locals => {
     :app_title => APP_NAME,
     :username => get_username,
-    :trips => random_trips,
+    :drivers => AppController.instance.drivers,
   }
 end

@@ -81,7 +81,6 @@ class AppController
     @users_by_id[id]
   end
 
-
   # Saves the users in the hashes @drivers and @passengers
   # in a json file.
   # Each user instance must have a to_hash method.
@@ -98,7 +97,7 @@ class AppController
 
   # Takes a email and return the id of the passenger associated whit that email
   def look_for_passenger_id(email)
-    user = @passengers.dig(email)
+    user = @passengers[email]
     if !user.nil?
       user.id
     else
@@ -108,7 +107,7 @@ class AppController
 
   # Takes a email and return the id of the driver associated whit that email
   def look_for_driver_id(email)
-    user = @drivers.dig(email)
+    user = @drivers[email]
     if !user.nil?
       user.id
     else
@@ -120,7 +119,7 @@ class AppController
   # and Return associated information
   def look_for_user_info(id,info)
     begin
-      user = @users_by_id.dig(id)
+      user = @users_by_id[id]
       if info == 'name'
         user.name
       elsif  info == 'email'
@@ -147,10 +146,10 @@ class AppController
 
     if info == 'balance'
       @users_by_id[id].balance = @users_by_id[id].balance + value
-    elsif info == 'rating' and @users_by_id[id].type == "driver"
+    elsif info == 'rating' and @users_by_id[id].is_a?(Driver)
       @users_by_id[id].update_rating(value)
-    elsif info == 'miles' and @users_by_id[id].type == "passenger"
-      @users_by_id[id].miles = @users_by_id[id].miles + value
+    elsif info == 'miles' and @users_by_id[id].is_a?(Passenger)
+      @users_by_id[id].miles += value
     end
     save_users()
   end

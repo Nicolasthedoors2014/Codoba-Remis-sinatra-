@@ -14,18 +14,18 @@
         <th>Ver Perfil</th>
       </tr>
     </thead>
-    <% trips.each_with_index do |trip, index| %>
+    <% drivers.each do |email, driver| %>
       <tr>
 
         <td class="mdl-data-table__cell--non-numeric">
-          <b> <%= trip[0] %> </b> <!-- Name of the driver -->
+          <b> <%= driver.name %> </b> <!-- Name of the driver -->
         </td>
         <td>
-          <b> <%= trip[1] %> </b> <!-- Fare of the driver -->
+          <b> <%= driver.fare %> </b> <!-- Fare of the driver -->
         </td>
 
         <td>
-          <a href="/profile?user_id=<%= trip[3] %>"><i class="info-icon material-icons">info</i></a>
+          <a href="/profile?user_id=<%= driver.id %>"><i class="info-icon material-icons">info</i></a>
         </td>
       </tr>
     <% end %>
