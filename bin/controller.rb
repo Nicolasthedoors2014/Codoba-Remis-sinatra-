@@ -1,16 +1,15 @@
 # This file contains the application controller that keeps track of the objects
 # and manages the interactions inbetween themselves and with the user.
 
-require "json"
-require "singleton"
+require 'json'
+require 'singleton'
 require './bin/locations'
 require './bin/passenger'
 require './bin/driver'
 require './bin/trip'
 
-
-USER_DATABASE_FILENAME = "users.json"
-LOCATIONS_DATABASE_FILENAME = "locations.json"
+USER_DATABASE_FILENAME = 'users.json'
+LOCATIONS_DATABASE_FILENAME = 'locations.json'
 
 class AppController
   include Singleton
@@ -70,16 +69,6 @@ class AppController
     trips
   end
 
-  # Returns the names of all locations.
-  def location_names
-    @locations.keys
-  end
-
-  # Return the user with id specified
-  def get_user_by_id(id)
-    @users_by_id[id]
-  end
-
   # Saves the users in the hashes @drivers and @passengers
   # in a json file.
   # Each user instance must have a to_hash method.
@@ -94,37 +83,19 @@ class AppController
     file.close
   end
 
-  # Takes a email and return the id of the passenger associated whit that email
-  def look_for_passenger_id(email)
-    user = @passengers[email]
-    if !user.nil?
-      user.id
-    else
-      nil
-    end
-  end
-
-  # Takes a email and return the id of the driver associated whit that email
-  def look_for_driver_id(email)
-    user = @drivers[email]
-    if !user.nil?
-      user.id
-    else
-      nil
-    end
-  end
-
-  # Update information (info) for the new value,
-  # of the user associated with the id
+  # Update balance and miles accumulated of the
+  # passenger associated with the id
+  # and update the balance and rating of
+  # the driver of the trip
   def update_user_info(user_id, trip, rating)
 
     @users_by_id[user_id].balance -= trip.cost.round(2)
-    @users_by_id[user_id].miles += trip.distance
+    @users_by_id[user_id].miles += trip.distance.round(2)
     @users_by_id[trip.driver.id.to_s].balance += trip.cost.round(2)
     if !rating.nil?
       @users_by_id[trip.driver.id.to_s].update_rating(rating.to_i)
     end
-    save_users()
+    save_users
   end
 
   private
@@ -141,8 +112,7 @@ class AppController
     end
     # Use the values in data_hash to fill the @locations list.
     data_hash.each do |location|
-      @locations[location['name']] = Location.new(location['name'],
-                              location['x_coordinate'],location['y_coordinate'])
+      @locations[location['name']] = Location.new_from_hash(location)
     end
   end
 
@@ -160,15 +130,13 @@ class AppController
     # Use the values in data_hash to fill the @passenger or
     # @drivers list, and users_by_id list.
     data_hash.each do |user|
-      if user['type'] == "passenger"
+      if user['type'] == 'passenger'
         @passengers[user['email']] = Passenger.new_from_hash(user)
         @users_by_id[@passengers[user['email']].id.to_s] = @passengers[user['email']]
-      elsif user['type'] == "driver"
+      elsif user['type'] == 'driver'
         @drivers[user['email']] = Driver.new_from_hash(user)
         @users_by_id[@drivers[user['email']].id.to_s] = @drivers[user['email']]
       end
     end
   end
-
-
 end

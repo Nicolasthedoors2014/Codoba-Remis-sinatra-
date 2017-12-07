@@ -14,7 +14,7 @@ class Passenger < User
 
   def initialize(name, email, phone, balance, miles)
     super(name, email, phone, balance)
-    @miles = miles
+    @miles = miles.round(2)
     @type = 'passenger'
   end
 

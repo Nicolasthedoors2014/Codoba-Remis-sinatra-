@@ -24,7 +24,7 @@ get '/' do
   erb :index, :layout => :layout, :locals => {
     :app_title => APP_NAME,
     :username => get_username,
-    :locations => AppController.instance.location_names
+    :locations => AppController.instance.locations.keys
   }
 end
 
@@ -52,17 +52,17 @@ end
 post '/register_passenger' do
   name = params[:name]
   email = params[:email]
-  existsDriver = AppController.instance.look_for_driver_id(email)
-  existsPassenger = AppController.instance.look_for_passenger_id(email)
-  if existsDriver.nil? and existsPassenger.nil?
+  existsDriver = AppController.instance.drivers[email]
+  existsPassenger = AppController.instance.passengers[email]
+  if existsDriver.nil? && existsPassenger.nil?
     phone = params[:phone]
     AppController.instance.register_passenger(name, email, phone)
     '/'  # In case everythin is ok, we return the redirection url
   else
     redirect '/400'
   end
-  session['user_id'] = AppController.instance.look_for_passenger_id(email)
-  if session['user_id'] == nil
+  session['user_id'] = AppController.instance.passengers[email]
+  if session['user_id'].nil?
     redirect '/400'
   end
 end
@@ -80,19 +80,19 @@ end
 post '/register_driver' do
   name = params[:name]
   email = params[:email]
-  existsDriver = AppController.instance.look_for_passenger_id(email)
-  existsPassenger = AppController.instance.look_for_driver_id(email)
-  if (existsDriver == nil) and (existsPassenger == nil)
+  existsDriver = AppController.instance.passengers[email]
+  existsPassenger = AppController.instance.drivers[email]
+  if existsDriver.nil? && existsPassenger.nil?
     phone = params[:phone]
     licence = params[:licence]
-    fare = Integer(params[:fare])
+    fare = params[:fare].to_i
     AppController.instance.register_driver(name, email, phone, licence, fare)
     '/'  # Redirection url
   else
     redirect '/400'
   end
-  session['user_id'] = AppController.instance.look_for_driver_id(email)
-  if session['user_id'] == nil
+  session['user_id'] = AppController.instance.drivers[email]
+  if session['user_id'].nil?
     redirect '/400'
   end
 end
@@ -115,13 +115,13 @@ post '/login' do
   email = params[:email]
   user_type = params[:user_type]
   if user_type == "passenger"
-    session['user_id'] = AppController.instance.look_for_passenger_id(email)
-    if session['user_id'] == nil
+    session['user_id'] = AppController.instance.passengers[email]
+    if session['user_id'].nil?
       redirect '/400'
     end
   else
-    session['user_id'] = AppController.instance.look_for_driver_id(email)
-    if session['user_id'] == nil
+    session['user_id'] = AppController.instance.drivers[email]
+    if session['user_id'].nil?
       redirect '/400'
     end
   end
@@ -144,7 +144,7 @@ get '/list_trips' do
   erb :list_trips, :layout => :layout, :locals => {
     :app_title => APP_NAME,
     :username => get_username,
-    :locations => AppController.instance.location_names,
+    :locations => AppController.instance.locations.keys,
     :destination => params[:destination],
     :origin => params[:origin]
   }
@@ -179,9 +179,8 @@ get '/finish_trip' do
       redirect '/list_trips'
     end
     session['current_trip'] = session['trips'][params[:trip_number].to_i]
-    puts "HOLAAAAAAAAAAAaaaaa este es el trip q eligio #{get_username} : #{session['current_trip'].id}"
-    AppController.instance.trips[session['current_trip'].driver.id] = session['current_trip']
-    puts "JUAJAJAJA #{AppController.instance.trips[session['current_trip'].driver.id].inspect}"
+    id_current_driver = session['current_trip'].driver.id
+    AppController.instance.trips[id_current_driver] = session['current_trip']
     session['trips'] = nil
     erb :finish_trip, :layout => :layout, :locals => {
       :app_title => APP_NAME,
@@ -221,7 +220,7 @@ get '/profile' do
     showID = true
   end
 
-  user = AppController.instance.get_user_by_id(id_user)
+  user = AppController.instance.users_by_id[id_user]
 
   erb :profile, :layout => :layout, :locals => {
     :app_title => APP_NAME,
