@@ -5,6 +5,13 @@ require './bin/user'
 class Passenger < User
   attr_accessor :miles
 
+    class << self
+      def new_from_hash user
+        Passenger.new(user['name'], user['email'],
+                      user['phone'], user['balance'], user['miles'])
+      end
+    end
+
     def initialize(name, email, phone, balance, miles)
         super(name, email, phone, balance)
         @miles = miles

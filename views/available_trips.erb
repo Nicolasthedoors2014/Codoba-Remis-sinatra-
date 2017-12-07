@@ -19,26 +19,23 @@
             </label>
           </td>
           <td class="mdl-data-table__cell--non-numeric">
-            <b> <%= trip[0] %> </b> <!-- Name of the driver -->
+            <b> <%= trip.driver.name %> </b> <!-- Name of the driver -->
           </td>
           <td>
-            <b> <%= trip[1] %> </b> <!-- Fare of the driver -->
+            <b> <%= trip.driver.fare %> </b> <!-- Fare of the driver -->
           </td>
           <td>
-              <% trip[2].each do |rating_count, rating| %> <!-- Raiting of the driver -->
-              <% rating = 5 - rating_count %>
-                <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--middler">
-                  <span class="star-span">
-                  <!-- Draw all the stars in the rating line. -->
-                  <% (1..5 - rating).each do %>
-                    <i class="material-icons">star</i>
-                  <% end %>
-                  </span>
-                </div>
-              <% end %>
+            <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--middler">
+              <span class="star-span">
+                <!-- Draw all the stars in the rating line. -->
+                <% (1..trip.driver.avarage_rating).each do %>
+                  <i class="material-icons">star</i>
+                <% end %>
+              </span>
+            </div>
           </td>
           <td>
-            <a href="/profile?user_id=<%= trip[3] %>"><i class="info-icon material-icons">info</i></a>
+            <a href="/profile?user_id=<%= trip.driver.id %>"><i class="info-icon material-icons">info</i></a>
           </td>
         </tr>
       <% end %>

@@ -6,6 +6,8 @@ require "singleton"
 require './bin/locations'
 require './bin/passenger'
 require './bin/driver'
+require './bin/trip'
+
 
 USER_DATABASE_FILENAME = "users.json"
 LOCATIONS_DATABASE_FILENAME = "locations.json"
@@ -14,7 +16,7 @@ class AppController
   include Singleton
 
   # Attribute to save the name of the user logged in.
-  attr_reader :drivers, :passengers, :locations, :users_by_id
+  attr_reader :drivers, :passengers, :locations, :users_by_id, :trips
 
   def initialize
     # Attributes to store the registered passengers and drivers while the
@@ -29,6 +31,9 @@ class AppController
 
     # Attribute to store the possible locations
     @locations = {}
+
+    # Attribute to keep trips in progress
+    @trips = {}
 
     load_locations
     load_users
@@ -58,17 +63,11 @@ class AppController
   # Creates a fake list of trips
   def random_trips(origin, destination)
     trips = []
-    distance = calculate_distance(origin, destination)
+    distance = @locations[origin].distance_to(@locations[destination])
     # List of trips from the origin to the destination with all the drivers.
     @drivers.each_value { |driver| trips.push(
-      [driver.name, driver.fare * distance, driver.rating, driver.id]
-    )}
+      Trip.new(origin, destination, distance, driver))}
     trips
-  end
-
-  # Computes the distance between origin and destination
-  def calculate_distance(origin, destination)
-    @locations[origin].distance_to(@locations[destination])
   end
 
   # Returns the names of all locations.
@@ -115,41 +114,15 @@ class AppController
     end
   end
 
-  # Takes a id of an user and the information that is wanted from this,
-  # and Return associated information
-  def look_for_user_info(id,info)
-    begin
-      user = @users_by_id[id]
-      if info == 'name'
-        user.name
-      elsif  info == 'email'
-        user.email
-      elsif info == 'balance'
-        user.balance
-      elsif info == 'phone'
-        user.phone
-      elsif info == 'miles'
-        user.miles
-      elsif info == 'licence'
-        user.licence
-      elsif info == 'rating'
-        user.rating
-      end
-    rescue
-      nil
-    end
-  end
-
   # Update information (info) for the new value,
   # of the user associated with the id
-  def update_user_info(id,info,value)
+  def update_user_info(user_id, trip, rating)
 
-    if info == 'balance'
-      @users_by_id[id].balance = @users_by_id[id].balance + value
-    elsif info == 'rating' and @users_by_id[id].is_a?(Driver)
-      @users_by_id[id].update_rating(value)
-    elsif info == 'miles' and @users_by_id[id].is_a?(Passenger)
-      @users_by_id[id].miles += value
+    @users_by_id[user_id].balance -= trip.cost.round(2)
+    @users_by_id[user_id].miles += trip.distance
+    @users_by_id[trip.driver.id.to_s].balance += trip.cost.round(2)
+    if !rating.nil?
+      @users_by_id[trip.driver.id.to_s].update_rating(rating.to_i)
     end
     save_users()
   end
@@ -188,13 +161,10 @@ class AppController
     # @drivers list, and users_by_id list.
     data_hash.each do |user|
       if user['type'] == "passenger"
-        @passengers[user['email']] = Passenger.new(user['name'], user['email'],
-                                  user['phone'], user['balance'], user['miles'])
+        @passengers[user['email']] = Passenger.new_from_hash(user)
         @users_by_id[@passengers[user['email']].id.to_s] = @passengers[user['email']]
       elsif user['type'] == "driver"
-        @drivers[user['email']] = Driver.new(user['name'], user['email'],
-                                user['phone'], user['balance'], user['licence'],
-                                user['fare'], user['rating'])
+        @drivers[user['email']] = Driver.new_from_hash(user)
         @users_by_id[@drivers[user['email']].id.to_s] = @drivers[user['email']]
       end
     end

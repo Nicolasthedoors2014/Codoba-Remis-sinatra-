@@ -16,8 +16,8 @@ set :session_secret, 'secret ' + APP_NAME
 
 # Returns the name of the currently logged user
 def get_username
-  help = session['user_id'].inspect
-  return AppController.instance.look_for_user_info(help,"name")
+  id = session['user_id']
+  !id.nil? ? AppController.instance.users_by_id[id.to_s].name : nil
 end
 
 get '/' do
@@ -157,13 +157,10 @@ end
 post '/available_trips' do
   origin = params[:origin]
   destination = params[:destination]
-  random_trips =  AppController.instance.random_trips(origin, destination)
-  session['origin'] = origin
-  session['destination'] = destination
-  session['miles'] = AppController.instance.calculate_distance(origin,
-                                                              destination)
+  session['trips'] = AppController.instance.random_trips(origin, destination)
+  puts "EStos son los viajes de #{get_username} : #{session['trips']}"
   erb :available_trips, :layout => false, :locals => {
-    :trips => random_trips,
+    :trips => session['trips'],
   }
 end
 
@@ -178,18 +175,18 @@ get '/finish_trip' do
       :trip_number => params[:trip_number]}}
     redirect '/login'
   else
-    if params[:trip_number] == nil
+    if params[:trip_number].nil?
       redirect '/list_trips'
     end
-    tripNumbrer = Integer(params[:trip_number])
-    random_trips =  AppController.instance.random_trips(session['origin'],
-                                                        session['destination'])
-    session['driver_selected'] = random_trips[tripNumbrer][3]
-    session['fare'] = random_trips[tripNumbrer][1]
+    session['current_trip'] = session['trips'][params[:trip_number].to_i]
+    puts "HOLAAAAAAAAAAAaaaaa este es el trip q eligio #{get_username} : #{session['current_trip'].id}"
+    AppController.instance.trips[session['current_trip'].driver.id] = session['current_trip']
+    puts "JUAJAJAJA #{AppController.instance.trips[session['current_trip'].driver.id].inspect}"
+    session['trips'] = nil
     erb :finish_trip, :layout => :layout, :locals => {
       :app_title => APP_NAME,
       :username => get_username,
-      :driver_name => random_trips[tripNumbrer][0]
+      :driver_name => session['current_trip'].driver.name
     }
   end
 end
@@ -198,19 +195,11 @@ end
 #   :rating (int) The scoring of the driver for this trip.
 post '/pay_trip' do
   AppController.instance.update_user_info(session['user_id'].inspect,
-                                          'balance',0 - session['fare'])
-  AppController.instance.update_user_info(session['driver_selected'].inspect,
-                                          'balance',session['fare'])
-  AppController.instance.update_user_info(session['user_id'].inspect, 'miles',
-                                          session['miles'])
-  # Update rating only if the user gave an opinion
-  if !params[:rating].nil?
-    rating = Integer(params[:rating])
-    AppController.instance.update_user_info(session['driver_selected'].inspect,
-                                            'rating',rating)
-  end
-  session['fare']  = nil
-  session['driver_selected']  = nil
+                                          session['current_trip'],
+                                          params[:rating])
+
+  # Clean the session after the trip is over
+  session['current_trip'] = nil
   session['origin'] = nil
   session['destination'] = nil
   redirect '/'
