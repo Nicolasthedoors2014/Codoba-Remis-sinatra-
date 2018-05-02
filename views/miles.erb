@@ -1,0 +1,102 @@
+<link rel="stylesheet" type="text/css" href="/miles.css">
+
+<div class="mdl-grid content-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="description-section-text">
+      <div class="mdl-typography--display-1-color-contrast">
+      Millas y descuentos.
+      </div>
+    </div>
+  </div>
+
+    <form class="" action="/miles" method="post">
+      <%if user.miles > 20 %>
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Descuento del 10% en 5 viajes</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Obtendras un descuento del 10% en 5 viajes, en el viaje que desees.
+            Costo 15 millas...
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <div class="mdl-cell mdl-cell--12-col">
+              <input type="hidden" name="number_of_trips" value="5">
+              <input type="hidden" name="discount_rate" value="10">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                      id="select-trip-button" type="submit" name="submit">
+                obtener
+              </button>
+            </div>
+          </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">share</i>
+            </button>
+          </div>
+        </div>
+      <%else %>
+        <p> No tienes suficientes millas para descuentos</p>
+      <%end%>
+    </form>
+
+    <form class="" action="/miles" method="post">
+    <%if user.miles > 40 %>
+      <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Descuento del 30% en 3 viajes</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Obtendras un descuento del 30% en 3 viajes, en el viaje que desees.
+          Costo 15 millas...
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <div class="mdl-cell mdl-cell--12-col">
+            <input type="hidden" name="number_of_trips" value="3">
+            <input type="hidden" name="discount_rate" value="30">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    id="select-trip-button" type="submit" name="submit">
+              Obtener
+            </button>
+          </div>
+        </div>
+        <div class="mdl-card__menu">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">share</i>
+          </button>
+        </div>
+      </div>
+    <%end %>
+
+    </form>
+
+    <form class="" action="/miles" method="post">
+    <%if user.miles > 60 %>
+      <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Un viaje gratis</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Con este descuento tedras un viaje totalmente gratis a eleccion...
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <div class="mdl-cell mdl-cell--12-col">
+            <input type="hidden" name="number_of_trips" value="1">
+            <input type="hidden" name="discount_rate" value="100">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    id="select-trip-button" type="submit" name="submit">
+              Obtener
+            </button>
+          </div>
+        </div>
+        <div class="mdl-card__menu">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">share</i>
+          </button>
+        </div>
+      </div>
+    <%end %>
+
+  </form>
+
+</div>

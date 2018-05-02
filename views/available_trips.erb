@@ -6,6 +6,7 @@
           <th></th>
           <th class="mdl-data-table__cell--non-numeric">Driver</th>
           <th>Costo</th>
+          <th>Distancia conductor a origen</th>
           <th>Opiniones</th>
           <th></th>
         </tr>
@@ -22,8 +23,9 @@
             <b> <%= trip.driver.name %> </b> <!-- Name of the driver -->
           </td>
           <td>
-            <b> <%= trip.driver.fare %> </b> <!-- Fare of the driver -->
+            <b> <%= trip.cost %> </b> <!-- Cost of the trip -->
           </td>
+          <td> <%= trip.distance_driver_origin%></td>
           <td>
             <div class="mdl-cell mdl-cell--8-col mdl-cell--3-col-phone mdl-cell--middler">
               <span class="star-span">

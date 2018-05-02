@@ -17,7 +17,8 @@
       <div class="mdl-card__supporting-text">
       <form method="GET" action="/list_trips">
         <div class="locations-form-inputs mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
-          <input class="mdl-textfield__input" type="text" id="origin" value="" readonly tabIndex="-1" name="origin">
+          <input class="mdl-textfield__input" type="text" value="" readonly tabIndex="-1" name="origin">
+          <input type="hidden" id="origin" value="" name="origin">
           <label for="origin" class="mdl-textfield__label">Origen</label>
           <ul for="origin" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
             <% locations.each do |location| %>
@@ -26,8 +27,9 @@
           </ul>
         </div>
         <div class="locations-form-inputs mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth is-dirty">
-          <input class="mdl-textfield__input" type="text" id="destination" value="" readonly tabIndex="-1" name="destination">
+          <input class="mdl-textfield__input" type="text" value="" readonly tabIndex="-1" name="destination">
           <label for="destination" class="mdl-textfield__label">Destino</label>
+          <input type="hidden" id="destination" value="" name="destination">
           <ul for="destination" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
             <% locations.each do |location| %>
               <li class="mdl-menu__item" data-val="<%= location %>"><%= location %></li>

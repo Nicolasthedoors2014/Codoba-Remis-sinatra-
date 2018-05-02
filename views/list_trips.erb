@@ -12,9 +12,10 @@
   </div>
   <div class="mdl-cell mdl-cell--12-col">
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
-      <input class="mdl-textfield__input" type="text" id="origin" readonly tabIndex="-1"
+      <input class="mdl-textfield__input" type="text" readonly tabIndex="-1"
              data-val="<% if !origin.nil? %><%= origin %><% end %>"
              value="<% if !origin.nil? %><%= origin %><% end %>">
+      <input type="hidden" id="origin" value="" name="origin">
       <label for="origin" class="mdl-textfield__label">Origen</label>
       <ul for="origin" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
         <% locations.each do |location| %>
@@ -23,9 +24,10 @@
       </ul>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
-      <input class="mdl-textfield__input" type="text" id="destination" readonly tabIndex="-1"
+      <input class="mdl-textfield__input" type="text" readonly tabIndex="-1"
              data-val="<% if !destination.nil? %><%= destination %><% end %>"
              value="<% if !destination.nil? %><%= destination %><% end %>">
+      <input type="hidden" id="destination" value="" name="destination">
       <label for="destination" class="mdl-textfield__label">Destino</label>
       <ul for="destination" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
         <% locations.each do |location| %>
@@ -42,4 +44,3 @@
   <div id="available_trip_list">
   </div>
 </div>
-

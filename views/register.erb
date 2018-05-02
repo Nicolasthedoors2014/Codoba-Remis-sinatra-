@@ -1,19 +1,21 @@
 <% content_for :header_js do %>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css">
+  <script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>
   <script type="text/javascript" src="/register.js"></script>
 <% end %>
 
 <div class="mdl-grid content-grid">
 
     <div class="mdl-cell mdl-cell--12-col description-section-text">
-  <div class="description-section">
-      <div class="mdl-typography--display-1-color-contrast">
-        Registrate ahora y comenzá a usar nuestra app!
-      </div>
-      <p class="mdl-typography--font-light">
-        Te podés registrar como usuario para usar nuestros servicios de transporte, o como conductor para sumarte a nuestro equipo de forma independiente.
-        <br>
-      </p>
-      <a href="" class="app-link mdl-typography--font-light">Averiguá más sobre cómo ser conductor</a>
+      <div class="description-section">
+        <div class="mdl-typography--display-1-color-contrast">
+          Registrate ahora y comenzá a usar nuestra app!
+        </div>
+        <p class="mdl-typography--font-light">
+          Te podés registrar como usuario para usar nuestros servicios de transporte, o como conductor para sumarte a nuestro equipo de forma independiente.
+          <br>
+        </p>
+        <a href="" class="app-link mdl-typography--font-light">Averiguá más sobre cómo ser conductor</a>
     </div>
   </div>
   <div class="mdl-cell mdl-cell--6-col mdl-typography--text-center">
@@ -59,6 +61,20 @@
         <label class="mdl-textfield__label" for="email">Correo electrónico</label>
       </div>
     </div>
+
+    <div class="locations-form-inputs mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+      <input class="mdl-textfield__input" type="text"
+      value="<% if !ubication.nil? %><%= ubication %><% end %>" readonly tabIndex="-1" name="ubication">
+      <input type="hidden" id="ubication" value="" name="ubication">
+      <label for="ubication" class="mdl-textfield__label">ubicacion</label>
+      <ul for="ubication" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+        <% locations.each do |location| %>
+          <li class="mdl-menu__item" data-val="<%= location %>"><%= location %></li>
+        <% end %>
+      </ul>
+    </div>
+
+
     <div class="mdl-row">
       <div class="mdl-textfield mdl-js-textfield">
         <input class="mdl-textfield__input" type="text" id="driver-phone" name="phone">

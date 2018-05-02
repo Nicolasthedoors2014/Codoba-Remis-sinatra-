@@ -25,6 +25,7 @@ $(document).ready(function() {
       data: {
         email: $('#driver-email').first().val(),
         name: $('#driver-name').first().val(),
+        ubication: $('#ubication').first().attr('value'),
         phone: $('#driver-phone').first().val(),
         licence: $('#driver-license').first().val(),
         fare: $('#driver-fare').first().val()

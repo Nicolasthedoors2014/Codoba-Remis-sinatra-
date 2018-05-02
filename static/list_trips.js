@@ -1,9 +1,8 @@
 $(document).ready(function() {
-
   // Add listener for the submit button.
   $('#submit-button').click(function() {
-    var origin = $('#origin').first().attr('data-val');
-    var destination = $('#destination').first().attr('data-val');
+    var origin = $('#origin').first().attr('value');
+    var destination = $('#destination').first().attr('value');
     if (origin != '' && destination != '') {
       $.ajax({
         url: 'available_trips',

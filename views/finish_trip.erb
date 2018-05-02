@@ -3,41 +3,81 @@
 <% end %>
 
 
-<div class="mdl-grid content-grid">
-  <div class="description-section-text">
-    <div class="mdl-cell mdl-cell--12-col">
-      <div class="mdl-typography--display-1-color-contrast">
-        Felicitaciones!
-        <p class="mdl-typography--font-light">
-         Tu conductor <%= driver_name %> llegará en cualquier momento. Para finalizar, completa las siguientes acciones:
-        <br>
-        </p>
+<%if current_trip.check_distance_origin_destination <= 0%>
+  <div class="mdl-grid content-grid">
+    <div class="description-section-text">
+      <div class="mdl-cell mdl-cell--12-col">
+        <div class="mdl-typography--display-1-color-contrast">
+          Felicitaciones!
+          <p class="mdl-typography--font-light">
+           Tu conductor <%= current_trip.driver.name %> llegará en cualquier momento. Para finalizar, completa las siguientes acciones:
+          <br>
+          </p>
+        </div>
       </div>
+        <form method="POST" action="/pay_trip">
+          <div class="mdl-cell mdl-cell--12-col mdl-typography--display-1-color-contrast">
+            <p class="mdl-typography--font-light">
+             Contanos como estuvo tu viaje
+            </p>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col rating-div">
+            <div class="rating">
+              <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"></label>
+              <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"></label>
+              <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"></label>
+              <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"></label>
+              <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"></label>
+            </div>
+          </div>
+
+          <div class="">
+            <div class="mdl-cell mdl-cell--12-col mdl-typography--display-1-color-contrast">
+              <p class="mdl-typography--font-light">
+               ¿Desea aplicar alguno de los los descuentos disponibles para el pago?
+              </p>
+            </div>
+            <table class="mdl-data-table mdl-shadow--2dp">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="mdl-data-table__cell--non-numeric">Porcentaje del descuento</th>
+                  <th></th>
+                </tr>
+              </thead>
+            <% discounts.each do |discount| %>
+              <%if discount[0] != 0%>
+                <tr>
+                  <td>
+                    <label class="mdl-radio mdl-js-radio" for="discount-<%= discount[1] %>">
+                      <input type="radio" id="discount-<%= discount[1] %>" class="mdl-radio__button"
+                             name="discount_rate" value="<%= discount[1] %>"/>
+                    </label>
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    <b> <%= discount[1]%>% </b> <!-- Name of the driver -->
+                  </td>
+                </tr>
+              <%end%>
+              <% end %>
+              </table>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col">
+            <input type="hidden" name="driver_name" value="">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    id="select-trip-button" type="submit" name="submit">
+              Pagar viaje
+            </button>
+          </div>
+        </form>
     </div>
-      <form method="POST" action="/pay_trip">
-    <div class="mdl-cell mdl-cell--12-col mdl-typography--display-1-color-contrast">
-      <p class="mdl-typography--font-light">
-       Contanos como estuvo tu viaje
-      </p>
-    </div>
-    <div class="mdl-cell mdl-cell--12-col rating-div">
-      <div class="rating">
-        <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"></label>
-        <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"></label>
-        <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"></label>
-        <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"></label>
-        <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"></label>
-      </div>
-    </div>
-    <div class="mdl-cell mdl-cell--12-col">
-      <input type="hidden" name="driver_name" value="<%= driver_name %>">
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-              id="select-trip-button" type="submit" name="submit">
-        Pagar viaje
-      </button>
-    </div>
-      </form>
   </div>
-</div>
+  <%elsif%>
+    <div class="mdl-grid content-grid">
+      <div class="mdl-cell mdl-cell--12-col mdl-typography--display-1-color-contrast">
 
-
+        El viaje esta en curso... Recargue la pagina para ver como avanza.
+         La distancia actual es : <%= current_trip.current_distance.round(2) %> kilometros.
+      </div>
+    </div>
+  <%end%>

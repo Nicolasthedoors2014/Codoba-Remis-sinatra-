@@ -3,17 +3,18 @@ require './bin/user'
 # Class to represent driver.
 
 class Driver < User
-  attr_reader :fare, :rating, :licence
+  attr_reader :fare, :rating, :licence, :ubication
 
   class << self
     def new_from_hash(user)
       new(user['name'], user['email'], user['phone'], user['balance'],
-          user['licence'], user['fare'], user['rating'])
+          user['licence'], user['fare'], user['rating'], user['ubication'])
     end
   end
 
-  def initialize(name, email, phone, balance, licence, fare, rating)
+  def initialize(name, email, phone, balance, licence, fare, rating, ubication)
     super(name, email, phone, balance)
+    @ubication = ubication
     @licence = licence
     @fare = fare
     @type = 'driver'
@@ -43,6 +44,6 @@ class Driver < User
   def to_hash
     { 'name' => @name, 'email' => @email, 'phone' => @phone,
       'balance' => @balance, 'type' => @type, 'licence' => @licence,
-      'fare' => @fare, 'rating' => @rating }
+      'fare' => @fare, 'rating' => @rating, 'ubication' => @ubication }
   end
 end
